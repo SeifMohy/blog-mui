@@ -8,8 +8,15 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import {useContext } from "react";
+import {PostsContext} from "../context"
 
-const Modal = ({ posts, setPosts }) => {
+
+
+const Modal = () => {
+
+  const {posts, setPosts} = useContext(PostsContext)
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

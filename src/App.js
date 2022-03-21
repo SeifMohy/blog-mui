@@ -19,11 +19,11 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar posts={posts} setPosts={setPosts} />
+        <NavBar />
         <Routes>
           <Route
             path="/"
-            element={<Posts posts={posts} setPosts={setPosts} />}
+            element={<Posts />}
           />
           <Route path="/:id" element={PostPage} />
         </Routes>

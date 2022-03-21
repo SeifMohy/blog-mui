@@ -8,7 +8,14 @@ import Typography from "@mui/material/Typography";
 
 import { Link } from "react-router-dom";
 
-const Posts = ({ posts, setPosts }) => {
+import {useContext } from "react";
+import {PostsContext} from "../context"
+
+
+const Posts = () => {
+
+  const {posts, setPosts} = useContext(PostsContext)
+
   const delItem = (id) => {
     const deleted = posts.filter((post) => {
       return +post.id !== +id;
