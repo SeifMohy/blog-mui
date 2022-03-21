@@ -9,7 +9,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const Modal = ({ posts, setPosts }) => {
+import { useDispatch } from "react-redux";
+import { addingPosts } from "../Actions";
+
+const Modal = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -20,6 +23,9 @@ const Modal = ({ posts, setPosts }) => {
     setOpen(false);
     formik.resetForm();
   };
+
+  const dispatch = useDispatch();
+
 
   const userSchema = yup.object({
     title: yup.string().required("Required"),
@@ -35,9 +41,9 @@ const Modal = ({ posts, setPosts }) => {
     },
     onSubmit: (values) => {
       const id = Math.round(Math.random() * 100000);
-      setPosts([...posts, { ...values, id }]);
       formik.resetForm();
       handleClose();
+      dispatch(addingPosts({ ...values, id }));   //dispatching adding
     },
     validationSchema: userSchema,
   });
