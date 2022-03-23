@@ -8,11 +8,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useFormik } from "formik";
 import * as yup from "yup";
-
 import { useDispatch } from "react-redux";
-import { addPost } from "../Actions/PostActions";
+import { updatePost } from "../Actions/PostActions";
 
-const Modal = () => {
+const EditModal = ({ title, author, post, id }) => {
   //modal open/close
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -25,26 +24,24 @@ const Modal = () => {
 
   const dispatch = useDispatch();
 
-
   const userSchema = yup.object({
     title: yup.string().required("Required"),
-    userId: yup.number().required("Required"),
+    userId: yup.number().required("Give me a Number!"),
     body: yup.string().max(240),
   });
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      userId: 2,
-      body: "",
+      title: title,
+      userId: author,
+      body: post,
       comments: [], 
       votes: [],
     },
     onSubmit: (values) => {
-      const id = Math.round(Math.random() * 100000);
       formik.resetForm();
       handleClose();
-      dispatch(addPost(values));   //dispatching adding
+      dispatch(updatePost(id, values)); //dispatching adding
     },
     validationSchema: userSchema,
   });
@@ -52,8 +49,14 @@ const Modal = () => {
   return (
     <div>
       {" "}
-      <Button variant="outlined" color="inherit" onClick={handleClickOpen}>
-        Add!
+      <Button
+        variant="outlined"
+        color="inherit"
+        size="small"
+        style={{ margin: "7px" }}
+        onClick={handleClickOpen}
+      >
+        Edit
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Post</DialogTitle>
@@ -115,4 +118,4 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default EditModal;
